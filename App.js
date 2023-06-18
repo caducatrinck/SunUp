@@ -2,8 +2,13 @@ import { ActivityIndicator } from 'react-native';
 import React from 'react';
 import * as Font from 'expo-font';
 import { styled } from 'styled-components';
-import { StatusBar } from 'expo-status-bar';
 import Navigation from './src/router/Navigation';
+import { StatusBar } from 'expo-status-bar';
+import Constants from 'expo-constants';
+import { CustomTheme } from './src/helpers/CustomTheme';
+import { RecoilRoot } from 'recoil';
+const STATUSBAR_HEIGHT = Constants.statusBarHeight;
+const padding = Platform.OS === 'android' ? STATUSBAR_HEIGHT : 0;
 
 export default function App() {
 	const [fontLoaded, setFontLoaded] = React.useState(false);
@@ -11,7 +16,16 @@ export default function App() {
 	React.useEffect(() => {
 		async function loadFont() {
 			await Font.loadAsync({
-				'Poppins-Regular': require('./assets/fonts/Poppins-Regular.ttf'),
+				'BebasNeue-Regular': require('./assets/fonts/BebasNeue-Regular.ttf'),
+			});
+			await Font.loadAsync({
+				'Khand-Regular': require('./assets/fonts/Khand-Regular.ttf'),
+			});
+			await Font.loadAsync({
+				'Khand-Bold': require('./assets/fonts/Khand-Bold.ttf'),
+			});
+			await Font.loadAsync({
+				'Khand-SemiBold': require('./assets/fonts/Khand-SemiBold.ttf'),
 			});
 			setFontLoaded(true);
 		}
@@ -19,30 +33,31 @@ export default function App() {
 		loadFont();
 	}, []);
 
-	return fontLoaded ? (
-		<Container>
-			<Navigation />
-			<StatusBar style="light" />
-		</Container>
-	) : (
-		<LoadingContainer>
-			<ActivityIndicator size="large" color="white" />
-		</LoadingContainer>
+	return (
+		<RecoilRoot>
+			<ContainerView padding={padding}>
+				<StatusBar translucent style="light" />
+				{fontLoaded ? (
+					<Navigation />
+				) : (
+					<LoadingContainer>
+						<ActivityIndicator size="large" color="white" />
+					</LoadingContainer>
+				)}
+			</ContainerView>
+		</RecoilRoot>
 	);
 }
+const ContainerView = styled.SafeAreaView`
+	padding: ${(props) => `${props.padding}px 0px 0px 0px`};
+	flex: 1;
+	justify-content: center;
+	background-color: ${CustomTheme.colors.background};
+	background-color: ${CustomTheme.colors.backgroundLinear};
+`;
 
 const LoadingContainer = styled.View`
 	flex: 1;
 	align-items: center;
-	justify-content: center;
-	background-color: rgb(2, 0, 36);
-	background-color: linear-gradient(
-		135deg,
-		rgba(2, 0, 36, 1) 0%,
-		rgba(14, 14, 84, 1) 46%
-	);
-`;
-const Container = styled.View`
-	flex: 1;
 	justify-content: center;
 `;
