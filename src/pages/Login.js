@@ -5,6 +5,8 @@ import { CustomTheme } from '../helpers/CustomTheme';
 import React from 'react';
 import { useSetRecoilState } from 'recoil';
 import { fakeTokenAtom } from '../contexts/States';
+import { TextInput, View } from 'react-native';
+import CustomText from '../components/CustomText';
 
 export default function Login() {
 	const [name, setName] = React.useState('');
@@ -12,7 +14,6 @@ export default function Login() {
 	const [error, setError] = React.useState(false);
 
 	React.useEffect(() => {
-		console.log(name);
 		const regexOnlyLetters = /^[a-zA-Z\s]+$/;
 		if (!regexOnlyLetters.test(name) && name !== '') {
 			setError('O nome deve conter apenas letras!');
@@ -40,12 +41,12 @@ export default function Login() {
 					<CustomInput
 						onChangeText={(e) => setName(e)}
 						value={name}
-						placeholder="DIGITE SEU NOME!"
+						placeholder="DIGITE SEU NOME"
 						keyboardType="default"
 					/>
 				</InputContainer>
 				<CustomButton
-					disabled={error !== ''}
+					disable={error !== ''}
 					onClick={() => setNameAndGoHome()}
 					fontSize="20px"
 					heigth="30%"
@@ -53,31 +54,31 @@ export default function Login() {
 				/>
 				{error !== '' && (
 					<ErroTextContainer>
-						<ErroText>{error}</ErroText>
+						<CustomText
+							text={error}
+							font="upperFont"
+							color={CustomTheme.white}
+						/>
 					</ErroTextContainer>
 				)}
 			</FormContainer>
 		</BackgrondView>
 	);
 }
-const ErroText = styled.Text`
-	font-family: ${CustomTheme.upperFont};
-	color: ${CustomTheme.colors.white};
-	text-transform: uppercase;
-`;
-const ErroTextContainer = styled.View`
+
+const ErroTextContainer = styled(View)`
 	height: 20px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 `;
-const LogoContainer = styled.View`
+const LogoContainer = styled(View)`
 	padding-top: 50px;
 	height: 50%;
 	display: flex;
 	justify-content: center;
 `;
-const FormContainer = styled.View`
+const FormContainer = styled(View)`
 	height: 50%;
 	display: flex;
 	padding-top: 40px;
@@ -86,19 +87,19 @@ const FormContainer = styled.View`
 	width: 65%;
 	flex-direction: column;
 `;
-const InputContainer = styled.View`
+const InputContainer = styled(View)`
 	background-color: ${CustomTheme.colors.white};
 	border-radius: 5px;
 `;
-const CustomInput = styled.TextInput`
+const CustomInput = styled(TextInput)`
 	height: 40px;
 	padding: 0px 10px 0px 10px;
 	font-size: 15px;
 	font-style: normal;
-	font-family: ${CustomTheme.defaultSemiBoldFont};
+	font-family: ${CustomTheme.upperFont};
 `;
 
-const BackgrondView = styled.View`
+const BackgrondView = styled(View)`
 	width: 100%;
 	height: 100%;
 	display: flex;

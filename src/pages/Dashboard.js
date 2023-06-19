@@ -22,7 +22,6 @@ export default function Dashboard() {
 			setLoading(true);
 			setPage(1);
 			const response = await MakeRequest({ dataType: filter });
-			console.log(response);
 			setData(response.body.data);
 			setCardSchema([
 				{

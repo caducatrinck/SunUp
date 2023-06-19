@@ -12,7 +12,6 @@ export default function CustomSelect(props) {
 
 	function formatFilterField(index) {
 		const realIndex = granularidade.indexOf(index);
-		console.log('filter', realIndex);
 		setFilter(filterFields[realIndex]);
 	}
 

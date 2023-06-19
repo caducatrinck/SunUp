@@ -4,37 +4,33 @@ import { CustomTheme } from '../helpers/CustomTheme';
 import React from 'react';
 
 export default function CustomButton(props) {
-	const [pressButton, setPressButton] = React.useState(false);
 	const {
 		text,
 		onClick,
 		fontSize = '20px',
 		height = '40px',
 		width = 'auto',
-		disabled = false,
+		disable,
 	} = props;
 
 	return (
 		<DefaultButton
-			disabled={disabled}
-			onPressIn={() => setPressButton(true)}
-			onPressOut={() => setPressButton(false)}
+			disabled={!!disable}
 			onPress={() => onClick()}
 			height={height}
 			width={width}
-			active={pressButton}
 		>
 			<CustomText fontSize={fontSize}>{text}</CustomText>
 		</DefaultButton>
 	);
 }
-const CustomText = styled.Text`
+const CustomText = styled(Text)`
 	font-size: ${(props) => props.fontSize};
 	font-family: ${CustomTheme.upperFont};
 	text-align: center;
 	color: ${CustomTheme.colors.primary};
 `;
-const DefaultButton = styled.TouchableOpacity`
+const DefaultButton = styled(TouchableOpacity)`
 	background-color: ${CustomTheme.colors.secondary};
 	border-radius: 5px;
 	display: flex;

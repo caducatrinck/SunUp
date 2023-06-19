@@ -10,6 +10,4 @@ export const CustomTheme = {
 	},
 	upperFont: 'BebasNeue-Regular',
 	defaultFont: 'Khand-Regular',
-	defaultBoldFont: 'Khand-Bold',
-	defaultSemiBoldFont: 'Khand-SemiBold',
 };
